@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulado PM-SP CFS/25</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar {
+      background-color: #004080;
+      padding: 10px;
+      text-align: center;
+    }
+    .navbar a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      color: #333;
+    }
+    .pergunta {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .alternativa {
+      display: block;
+      margin: 5px 0;
+    }
+    .resposta-correta {
+      color: green;
+      font-weight: bold;
+    }
+    .resposta-incorreta {
+      color: red;
+      font-weight: bold;
+    }
+    button {
+      margin-top: 10px;
+    }
+    #pontuacao-final {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 30px;
+      color: #006600;
+      text-align: center;
+    }
+    .section {
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="#portugues">Língua Portuguesa</a>
+    <a href="#matematica">Matemática</a>
+    <a href="#profissionais">Conhecimentos Profissionais</a>
+  </div>
+
+  <div class="container">
+    <h1>Simulado PM-SP CFS/25</h1>
+
+    <div id="portugues" class="section">
+      <h2>Língua Portuguesa (1–20)</h2>
+      <div id="questoes-portugues"></div>
+    </div>
+
+    <div id="matematica" class="section">
+      <h2>Matemática (21–40)</h2>
+      <div id="questoes-matematica"></div>
+    </div>
+
+    <div id="profissionais" class="section">
+      <h2>Conhecimentos Profissionais (41–60)</h2>
+      <div id="questoes-profissionais"></div>
+    </div>
+
+    <div style="text-align:center; margin-top: 30px;">
+      <button onclick="mostrarTodasRespostas()">Mostrar todas as respostas corretas</button>
+      <button onclick="calcularPontuacao()">Calcular Pontuação</button>
+      <p id="pontuacao-final"></p>
+    </div>
+  </div>
+
+  <script>
+    const questoes = [
+      { numero: 1, disciplina: "portugues", pergunta: "Estamos condenados a viver em paz. Se substituirmos o infinitivo ‘viver’ por uma forma verbal desenvolvida, a forma correta seria:", alternativas: ['a que vivamos em paz.', 'a vivermos em paz.', 'a que vivêssemos em paz.', 'a que se viva em paz.'], correta: 'B' },
+      { numero: 2, disciplina: "portugues", pergunta: "Assinale a frase construída com pontuação correta:", alternativas: ['Diplomacia é a arte de saber o, que não dizer.', 'Um líder não impõe uma decisão: modela-a.', 'Na deixe inimigos, na retaguarda.', 'A guerra parece bonita; para quem não a conhece.'], correta: 'B' },
+      { numero: 3, disciplina: "portugues", pergunta: "Assinale a frase que mostra uma visão negativa da paz:", alternativas: ['A paz não tem fronteiras.', 'A paz é mais preciosa que um pedaço de terra.', 'A paz é a única forma de nos sentirmos humanos.', 'A paz é um pequeno intervalo entre guerras.'], correta: 'D' },
+      { numero: 4, disciplina: "portugues", pergunta: "Assinale o par de palavras abaixo em que o adjetivo mostra uma qualidade do substantivo por ele determinado:", alternativas: ['Céu cinzento.', 'Caneta esferográfica.', 'Tempo nublado.', 'Sol maravilhoso.'], correta: 'D' },
+      { numero: 5, disciplina: "portugues", pergunta: "Assinale a frase em que o acento grave indicativo da crase está bem-empregado:", alternativas: ['Fundamental é aplicar a lei igualmente à homens de todas as condições.', 'Os Estados Unidos podem ganhar a guerra, mas perderão à paz.', 'Se você der comida à eles, é democracia. Se não der, é ditadura.', 'Embriagar-se é como caminhar às cegas na escuridão da rua.'], correta: 'D' },
+      { numero: 6, disciplina: "portugues", pergunta: "Assinale a frase em que não ocorre a presença de uma oração consecutiva:", alternativas: ['Ninguém sofre tão pouco como o louco.', 'Tão certo é que a paisagem depende do ponto de vista, que o melhor modo de apreciar o chicote é ter-lhe o cabo na mão.', 'Não existe um homem tão justo sobre a Terra que faça o bem sem jamais pecar.', 'O país da loucura e da sabedoria são limítrofes e de fronteiras tão incertas que ninguém pode saber em qual dos dois se encontra.'], correta: 'A' },
+      { numero: 7, disciplina: "portugues", pergunta: "Assinale a frase em que o termo sublinhado é um adjetivo:", alternativas: ['O direito de roubar o estado não é um direito humano e não deve ser protegido.', 'Democracia é como nadar. Aprende-se praticando.', 'A gente não pode deixar que o país vá para o brejo.', 'Campanhas contra a fome não enchem barriga de ninguém.'], correta: 'A' },
+      { numero: 8, disciplina: "portugues", pergunta: "Mandar que ministros denunciados apurem denúncias em seus ministérios ou autarquias é / como indicar o coelho para descobrir quem comeu a couve da horta. Entre os dois segmentos indicados há uma relação de:", alternativas: ['causa e consequência.', 'afirmação e explicação.', 'comparação entre duas ações.', 'explicação de algo que ficou pouco claro.'], correta: 'C' },
+      { numero: 9, disciplina: "portugues", pergunta: "Assinale a frase em que a correspondência entre os termos não está correta:", alternativas: ['Ricardo acaba de cancelar a sua reserva. Isso me espanta bastante, pois não é hábito dele.', 'Sônia encontrou um emprego em seu domínio de especialização. Ela começa amanhã de manhã.', 'O professor nos deu uma semana para acabar o relatório. Será necessário ainda fazer a revisão do texto.', 'As esculturas africanas expostas atualmente no museu do centro da cidade causam admiração entre os visitantes. Você gosta de algumas delas em particular?'], correta: 'C' },
+      { numero: 10, disciplina: "portugues", pergunta: "Se eu fosse um dos homens do Hamas, não sairia para comprar uma pizza. Essa frase representa por parte de quem a escreve:", alternativas: ['uma ameaça.', 'uma ordem.', 'um conselho.', 'uma advertência.'], correta: 'D' },
+      { numero: 11, disciplina: "portugues", pergunta: "Assinale a frase em que não ocorre paralelismo sintático:", alternativas: ['As palavras são a mágica da mente; comida é a mágica do corpo e a música é a mágica da alma.', 'Prefiro a mente aberta por um milagre do que a mente fechada por uma crença.', 'As coisas não acontecem simplesmente, elas são feitas para acontecer.', 'Os dez mandamentos são mal conhecidos, mal compreendidos e mal vividos.'], correta: 'D' },
+      { numero: 12, disciplina: "portugues", pergunta: "Assinale a frase que se estrutura com base na linguagem figurada:", alternativas: ['O Iraque é mais seguro que muita cidade brasileira.', 'É preciso colocar alguém na cadeia.', 'Não se pode tirar a esperança do povo.', 'Cadeia é castigo e não colônia de férias.'], correta: 'D' },
+      { numero: 13, disciplina: "portugues", pergunta: "Assinale a frase em que ocorre a construção verbal na voz passiva:", alternativas: ['Não queremos parar de ser o que somos.', 'Não somos obrigados a aderir às minorias.', 'Neste país todos mandam e ninguém obedece.', 'Alguns são bons para a discussão política.'], correta: 'B' },
+      { numero: 14, disciplina: "portugues", pergunta: "Assinale a frase em que a troca de posição realizada na frase não é feita de forma adequada, pois ocorre modificação de sentido:", alternativas: ['A sabedoria se adquire com a capacidade, não com a idade / A sabedoria se adquire com a idade, não com a capacidade.', 'Nunca, nunca disse uma coisa a Natureza e outra a Sabedoria / Nunca, nunca disse uma coisa a Sabedoria e outra a Natureza.', 'Quem olha para trás não olha para a frente / Quem olha para a frente não olha para trás.', 'Os homens confiam menos nos seus ouvidos do que nos seus olhos / Os homens confiam mais nos seus olhos do que nos seus ouvidos.'], correta: 'A' },
+      { numero: 15, disciplina: "portugues", pergunta: "O grande mal do Brasil tem sido o crime sem castigo. O que reduz a criminalidade é a certeza da punição. Sobre essa frase, assinale a afirmação correta:", alternativas: ['O autor atribui a criminalidade no Brasil a um conjunto de fatores.', 'A locução “sem castigo” equivale ao adjetivo “impune”.', 'O segundo período do texto retifica uma falha no período anterior.', 'A expressão “certeza da punição” é um antônimo de “crime sem castigo”.'], correta: 'B' },
+      { numero: 16, disciplina: "portugues", pergunta: "Qualquer pessoa desprovida de senso de humor está à mercê de todos. Sobre essa frase, assinale a afirmativa correta:", alternativas: ['“Qualquer pessoa” é o mesmo que “Pessoa qualquer”.', '“desprovida” equivale a “sem provas”.', '“à mercê de todos” mostra inferioridade.', '“senso de humor” indica desprezo e deboche.'], correta: 'C' },
+      { numero: 17, disciplina: "portugues", pergunta: "Assinale a frase em que há antônimos entre os segmentos destacados:", alternativas: ['Não se acaba com a corrupção, / combate-se.', 'Demagogia é usar o passado / para absolver os responsáveis pelo presente.', 'Alguém lá deu uns tiros / mas não atingiram ninguém.', 'Sempre haverá um conflito entre o bom / e o ótimo.'], correta: 'D' },
+      { numero: 18, disciplina: "portugues", pergunta: "Assinale a frase abaixo em que a preposição de é exigida por um termo anterior:", alternativas: ['Não se tem necessidade de muito dinheiro para viver.', 'Bolo de fubá agrada a todos, como a democracia.', 'De manhã acordamos com disposição.', 'O vinho de Portugal é de ótima qualidade.'], correta: 'A' },
+      { numero: 19, disciplina: "portugues", pergunta: "Assinale a frase que mostra uma estruturação diferente das demais, por não ser uma definição:", alternativas: ['Negócios são a minha forma de arte.', 'A inteligência é feita por um terço de instinto, um terço de memória e o último terço de vontade.', 'A genialidade não é outra coisa senão uma grande aptidão para a paciência.', 'A genialidade é uma variedade da loucura.'], correta: 'A' },
+      { numero: 20, disciplina: "portugues", pergunta: "Um político em prisão domiciliar declarou: 'Não vejo muita diferença em estar preso aqui, ou estar preso num hotel, ou num quarto de luxo. A diferença é nenhuma. O que constrange é a falta de liberdade.' Sobre o texto acima, assinale a afirmação correta:", alternativas: ['Os segmentos “Não vejo muita diferença” e “A diferença é nenhuma” mostram uma contradição.', 'Segundo o texto, a falta de liberdade é menos intensa em alguns dos lugares citados.', 'Os locais de prisão citados proporcionam mais ou menos liberdade ao prisioneiro, segundo o texto.', 'O que é semelhante em todos os locais de prisão, segundo o texto, é a impossibilidade de receber visitas.'], correta: 'A' }
+    ];
+
+    function renderizarQuestoes() {
+      questoes.forEach(q => {
+        const div = document.createElement("div");
+        div.className = "pergunta";
+        div.innerHTML = `
+          <p><strong>${q.numero}. ${q.pergunta}</strong></p>
+          ${q.alternativas.map((alt, i) => {
+            const letra = String.fromCharCode(65 + i);
+            return `<label class="alternativa"><input type="radio" name="q${q.numero}" value="${letra}"> ${letra}) ${alt}</label>`;
+          }).join('')}
+          <button onclick="mostrarResposta(${q.numero}, '${q.correta}')">Ver Resposta</button>
+          <p id="resposta${q.numero}"></p>
+        `;
+        document.getElementById(`questoes-${q.disciplina}`).appendChild(div);
+      });
+    }
+
+    function mostrarResposta(num, correta) {
+      const radios = document.getElementsByName('q' + num);
+      let selecionada = '';
+      for (const radio of radios) {
+        if (radio.checked) selecionada = radio.value;
+      }
+      const resultado = document.getElementById('resposta' + num);
+      if (!selecionada) {
+        resultado.innerHTML = '<span class="resposta-incorreta">Escolha uma opção.</span>';
+        return;
+      }
+      if (selecionada === correta) {
+        resultado.innerHTML = '<span class="resposta-correta">Correto!</span>';
+      } else {
+        resultado.innerHTML = '<span class="resposta-incorreta">Incorreto. A resposta certa é: ' + correta + '.</span>';
+      }
+    }
+
+    function mostrarTodasRespostas() {
+      questoes.forEach(q => mostrarResposta(q.numero, q.correta));
+    }
+
+    function calcularPontuacao() {
+      let pontos = 0;
+      questoes.forEach(q => {
+        const radios = document.getElementsByName('q' + q.numero);
+        for (const r of radios) {
+          if (r.checked && r.value === q.correta) {
+            pontos++;
+            break;
+          }
+        }
+      });
+      document.getElementById("pontuacao-final").innerText = `Você acertou ${pontos} de ${questoes.length} questões.`;
+    }
+
+    renderizarQuestoes();
+  </script>
+</body>
+</html>
